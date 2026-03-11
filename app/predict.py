@@ -9,7 +9,6 @@ def predict_loan(data):
 
     prediction = model.predict(df)[0]
 
-    if prediction == 1:
-        return "Loan Approved"
-    else:
-        return "Loan Rejected"
+    probability = model.predict_proba(df)[0][1]
+
+    return prediction, probability

@@ -1,10 +1,9 @@
 import streamlit as st
 from app.predict import predict_loan
 
-st.title("🏦 Loan Approval Prediction")
+st.title("Loan Approval Prediction")
 
-st.write("Enter applicant details to predict loan approval.")
-
+# Input fields
 gender = st.selectbox("Gender", ["Male", "Female"])
 married = st.selectbox("Married", ["Yes", "No"])
 dependents = st.selectbox("Dependents", ["0", "1", "2", "3+"])
@@ -20,6 +19,7 @@ credit_history = st.selectbox("Credit History", [1, 0])
 property_area = st.selectbox("Property Area", ["Urban", "Semiurban", "Rural"])
 
 
+# Predict button
 if st.button("Predict Loan Approval"):
 
     data = {
@@ -36,6 +36,11 @@ if st.button("Predict Loan Approval"):
         "Property_Area": property_area
     }
 
-    result = predict_loan(data)
+    prediction, probability = predict_loan(data)
 
-    st.success(result)
+    if prediction == 1:
+        st.success("Loan Approved")
+    else:
+        st.error("Loan Rejected")
+
+    st.write(f"Approval Probability: {probability:.2f}")
